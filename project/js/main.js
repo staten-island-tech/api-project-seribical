@@ -55,7 +55,7 @@ DOMSelectors.button.addEventListener("click", function(event){
 
 async function data(name,page){
   try{
-    let anime = await fetch(`https://api.jikan.moe/v4/anime?q=${name}&page=${page}`);
+    let anime = await fetch(`https://api.jikan.moe/v4/anime?sfw&q=${name}&page=${page}`);
     let list = await anime.json();
     let reverse = list.data.reverse();
     console.log(reverse)
@@ -81,15 +81,65 @@ async function data(name,page){
         </div>
         `)
       })
-      DOMSelectors.box.insertAdjacentHTML(
-        "beforeend",
-        `
-        <div id="footer">
-          <button class="pageselector" id="prev"><</button>
-          <input type="text" id="page" value="${page}">
-          <button class="pageselector" id="next">></button>
-        </div>
-        `)
+      if(page===1){
+        if(page===list.pagination.last_visible_page){
+          DOMSelectors.box.insertAdjacentHTML(
+            "beforeend",
+            `
+            <div id="footer">
+              <div id="pagenum">
+                <p>page </p>
+                <input type="text" id="page" value="${page}">
+                <p> of ${list.pagination.last_visible_page}</p>
+              </div>
+            </div>
+            `
+          )
+        }else{
+          DOMSelectors.box.insertAdjacentHTML(
+            "beforeend",
+            `
+            <div id="footer">
+              <div id="pagenum">
+                <p>page </p>
+                <input type="text" id="page" value="${page}">
+                <p> of ${list.pagination.last_visible_page}</p>
+              </div>
+              <button class="pageselector" id="next">></button>
+            </div>
+            `)
+        }
+      }else if(page>1){
+        if(page===list.pagination.last_visible_page){
+          DOMSelectors.box.insertAdjacentHTML(
+            "beforeend",
+            `
+            <div id="footer">
+            <button class="pageselector" id="prev"><</button>
+            <div id="pagenum">
+                <p>page </p>
+                <input type="text" id="page" value="${page}">
+                <p> of ${list.pagination.last_visible_page}</p>
+              </div>
+            </div>
+            `
+          )
+        }else{
+          DOMSelectors.box.insertAdjacentHTML(
+            "beforeend",
+            `
+            <div id="footer">
+            <button class="pageselector" id="prev"><</button>
+            <div id="pagenum">
+            <p>page </p>
+            <input type="text" id="page" value="${page}">
+            <p> of ${list.pagination.last_visible_page}</p>
+          </div>
+              <button class="pageselector" id="next">></button>
+            </div>
+            `)
+        }
+      }
 
         function pageselect(){
         const selectors = document.querySelectorAll(".pageselector")

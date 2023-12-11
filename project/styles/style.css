@@ -3,3 +3,24 @@
 #content{
     display: flex;
 }
+
+#page{
+    width: 20px;
+    height: 15px;
+    margin: 5px;
+}
+
+#pagenum{
+    display: flex;
+    align-items: center;
+    margin: 5px;
+}
+
+#footer{
+    display: flex;
+    align-items: center;
+}
+
+.pageselector{
+    height: 20px;
+}
