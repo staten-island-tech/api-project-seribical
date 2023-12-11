@@ -5,18 +5,60 @@ DOMSelectors.box.innerHTML = `
 
 `
 
-async function data(){
+async function initial(){
   try{
-    let anime= await fetch('https://api.jikan.moe/v4/anime?q=quintessential');
+    const random = Math.floor(Math.random() * 1034) + 1;
+    console.log(random)
+    let anime= await fetch(`https://api.jikan.moe/v4/anime?page=${random}`);
+    let list= await anime.json();
+    console.log(list.data.title)
+    list.data.forEach((i)=>{
+      DOMSelectors.box.insertAdjacentHTML(
+        "afterbegin",
+        `<p id="title">${i.title}</p>`)
+      })
+  }
+  catch{
+    console.log("caught")
+  }
+}
+
+
+
+DOMSelectors.button.addEventListener("click", function(event){
+  event.preventDefault;
+  const info = document.querySelectorAll("#title")
+  info.forEach((i)=>i.remove())
+  if (DOMSelectors.search.value===""){
+    console.log('nad id win')
+  }
+  else{
+    data(DOMSelectors.search.value)
+  }
+  
+
+})
+
+async function data(name){
+  try{
+    let anime= await fetch(`https://api.jikan.moe/v4/anime?q=${name}`);
     let list=await anime.json();
     console.log(list)
-    list.data.forEach((i)=>{
-    DOMSelectors.box.insertAdjacentHTML(
-      "afterbegin",
-      `<p>${i.title_english}</p>`)
-    })}
-    catch{
-      console.log("check your gogddman code")
-    }}
+    if(list.data.length==0){
+      console.log('search better kid')
+    }
+    else{
+      list.data.forEach((i)=>{
+        DOMSelectors.box.insertAdjacentHTML(
+          "afterbegin",
+          `<p id="title">${i.title}</p>`)
+        })}
+    }
+  catch{
+    console.log("caught")
+  }
+}
 
-data();
+
+initial();
+
