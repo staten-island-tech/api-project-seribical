@@ -27,8 +27,6 @@ async function initial(){
   }
 }
 
-
-
 DOMSelectors.button.addEventListener("click", function(event){
   event.preventDefault;
   const info = document.querySelectorAll("#content")
@@ -45,23 +43,38 @@ DOMSelectors.button.addEventListener("click", function(event){
 
 async function data(name){
   try{
-    let anime= await fetch(`https://api.jikan.moe/v4/anime?q=${name}`);
-    let list=await anime.json();
-    console.log(list)
+
+    
+
+    let anime = await fetch(`https://api.jikan.moe/v4/anime?q=${name}&page=2`);
+    let list = await anime.json();
+    let reverse = list.data.reverse();
+    console.log(reverse)
     if(list.data.length==0){
       console.log('search better kid')
     }
     else{
-      list.data.forEach((i)=>{
+      reverse.forEach((i)=>{
         DOMSelectors.box.insertAdjacentHTML(
           "afterbegin",
           `
           <div id=content>
-          <p>${i.title}</p>
-          <p>${i.rating}</p>
+            <p>${i.title}</p>
+            <p>${i.rating}</p>
           </div>
           `)
-        })}
+        })
+        DOMSelectors.box.insertAdjacentHTML(
+          "beforeend",
+          `
+          <div id="footer">
+            <button id="prev"><</button>
+            <input type="text" id="page">
+            <button id="next">></button>
+          </div>
+          `
+        )
+      }
     }
   catch{
     console.log("caught")
