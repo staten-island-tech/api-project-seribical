@@ -11,11 +11,15 @@ async function initial(){
     console.log(random)
     let anime= await fetch(`https://api.jikan.moe/v4/anime?page=${random}`);
     let list= await anime.json();
-    console.log(list.data.title)
     list.data.forEach((i)=>{
       DOMSelectors.box.insertAdjacentHTML(
         "afterbegin",
-        `<p id="title">${i.title}</p>`)
+        `
+        <div id=content>
+        <p>${i.title}</p>
+        <p>${i.rating}</p>
+        </div>
+        `)
       })
   }
   catch{
@@ -27,7 +31,7 @@ async function initial(){
 
 DOMSelectors.button.addEventListener("click", function(event){
   event.preventDefault;
-  const info = document.querySelectorAll("#title")
+  const info = document.querySelectorAll("#content")
   info.forEach((i)=>i.remove())
   if (DOMSelectors.search.value===""){
     console.log('nad id win')
@@ -51,14 +55,18 @@ async function data(name){
       list.data.forEach((i)=>{
         DOMSelectors.box.insertAdjacentHTML(
           "afterbegin",
-          `<p id="title">${i.title}</p>`)
+          `
+          <div id=content>
+          <p>${i.title}</p>
+          <p>${i.rating}</p>
+          </div>
+          `)
         })}
     }
   catch{
     console.log("caught")
   }
 }
-
 
 initial();
 
