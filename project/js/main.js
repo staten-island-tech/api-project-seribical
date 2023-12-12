@@ -9,9 +9,10 @@ async function initial(){
   try{
     const random = Math.floor(Math.random() * 1034) + 1;
     console.log(random)
-    let anime= await fetch(`https://api.jikan.moe/v4/anime?page=${random}`);
+    let anime= await fetch(`https://api.jikan.moe/v4/anime?status=airing`);
     let list= await anime.json();
-    list.data.forEach((i)=>{
+    let reverse = list.data.reverse();
+    reverse.forEach((i)=>{
       DOMSelectors.box.insertAdjacentHTML(
         "afterbegin",
         `
@@ -69,15 +70,16 @@ async function data(name,page){
           </div>
         `
       )
-    }
-  else{
+    }else{
     reverse.forEach((i)=>{
       DOMSelectors.box.insertAdjacentHTML(
         "afterbegin",
         `
         <div id=content>
+        
           <p>${i.title}</p>
           <p>${i.rating}</p>
+        
         </div>
         `)
       })
