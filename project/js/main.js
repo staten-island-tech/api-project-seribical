@@ -56,10 +56,10 @@ DOMSelectors.button.addEventListener("click", function(event){
 
 async function data(name,page){
   try{
-    let anime = await fetch(`https://api.jikan.moe/v4/anime?sfw&q=${name}&page=${page}`);
+    let anime = await fetch(`https://api.jikan.moe/v4/anime&q=${name}&page=${page}`);
     let list = await anime.json();
-    let reverse = list.data.reverse();
-    console.log(reverse)
+    list.data.reverse();
+    console.log(list)
     if(list.data.length==0){
       console.log('search better kid')
       DOMSelectors.box.insertAdjacentHTML(
@@ -71,17 +71,17 @@ async function data(name,page){
         `
       )
     }else{
-    reverse.forEach((i)=>{
+    list.data.forEach((i)=>{
       DOMSelectors.box.insertAdjacentHTML(
         "afterbegin",
         `
         <div id=content>
-          <a href="anime/${i.title}">
           <p>${i.title}</p>
           <p>${i.rating}</p>
-          </a>
         </div>
-        `)
+        `
+        
+        )
       })
       if(page===1){
         if(page===list.pagination.last_visible_page){
@@ -162,6 +162,8 @@ async function data(name,page){
 
           })
         })}
+
+        
         pageselect();
       }
     }
