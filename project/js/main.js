@@ -76,10 +76,10 @@ async function data(name,page){
         "afterbegin",
         `
         <div id=content>
-        
+          <a href="anime/${i.title}">
           <p>${i.title}</p>
           <p>${i.rating}</p>
-        
+          </a>
         </div>
         `)
       })
