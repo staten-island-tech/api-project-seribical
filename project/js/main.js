@@ -48,6 +48,7 @@ async function initial(){
     const dropped = document.querySelectorAll(".dropped")
     dropped.forEach((i)=>i.addEventListener("click",function(event){
       event.preventDefault()
+      remove()
       var id = i.getAttribute('id')
       datag(id,1)
     }))
@@ -295,11 +296,11 @@ async function datag(genre,page){
           remove()
           if(i.textContent==">"){
             const number = page+1
-            data(name,number)
+            datag(genre,number)
           }
           if(i.textContent=="<"){
             const number = page-1
-            data(name,number)
+            datag(genre,number)
           }
 
           })
