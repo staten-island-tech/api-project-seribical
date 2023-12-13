@@ -1,5 +1,25 @@
 @import url(variables.css);
 
+body{
+    margin: 0px;
+    padding: 0px;
+}
+
+#navbar{
+    height: 45px;
+    width: 100%;
+    display: flex;
+    
+}
+
+#genredrop{
+    display: none;
+}
+
+#genres:hover #genredrop{
+    display: block;
+}
+
 #content{
     display: flex;
 }
@@ -26,5 +46,5 @@
 }
 
 div{
-    border: 0px solid black;
+    border: 1px solid black;
 }
