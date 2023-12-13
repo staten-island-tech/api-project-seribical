@@ -86,7 +86,6 @@ async function data(name,page){
       const button = document.querySelectorAll(".content")
       button.forEach((i)=>i.addEventListener("click", function(event){
         event.preventDefault
-        console.log(i)
         const info = document.querySelectorAll(".content")
         const footer = document.querySelector("#footer")
         footer.remove()
@@ -186,7 +185,7 @@ async function data(name,page){
 async function pageload(id,oname,opage){
   let anime = await fetch(`https://api.jikan.moe/v4/anime/${id}/full`);
   let list = await anime.json();
-
+  console.log(list)
     DOMSelectors.box.insertAdjacentHTML(
       "afterbegin",
       `
