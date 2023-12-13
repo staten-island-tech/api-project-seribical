@@ -24,3 +24,7 @@
 .pageselector{
     height: 20px;
 }
+
+div{
+    border: 0px solid black;
+}

@@ -16,7 +16,7 @@ async function initial(){
       DOMSelectors.box.insertAdjacentHTML(
         "afterbegin",
         `
-        <div id=content>
+        <div class="content">
         <p>${i.title}</p>
         <p>${i.rating}</p>
         </div>
@@ -40,23 +40,23 @@ async function initial(){
 
 DOMSelectors.button.addEventListener("click", function(event){
   event.preventDefault;
-  const info = document.querySelectorAll("#content")
-  const footer = document.querySelector("#footer")
-  footer.remove()
-  info.forEach((i)=>i.remove())
   if (DOMSelectors.search.value===""){
     console.log('nad id win')
+    alert("search something dipshit");
   }
   else{
-    data(DOMSelectors.search.value, 1)
+    const info = document.querySelectorAll(".content")
+    const footer = document.querySelector("#footer")
+    footer.remove()
+    info.forEach((i)=>i.remove())
+    data(DOMSelectors.search.value, 1);
+    DOMSelectors.search.value = "";
   }
-  
-
 })
 
 async function data(name,page){
   try{
-    let anime = await fetch(`https://api.jikan.moe/v4/anime&q=${name}&page=${page}`);
+    let anime = await fetch(`https://api.jikan.moe/v4/anime?q=${name}&page=${page}`);
     let list = await anime.json();
     list.data.reverse();
     console.log(list)
@@ -75,7 +75,7 @@ async function data(name,page){
       DOMSelectors.box.insertAdjacentHTML(
         "afterbegin",
         `
-        <div id=content>
+        <div class="content" id="${i.mal_id}">
           <p>${i.title}</p>
           <p>${i.rating}</p>
         </div>
@@ -83,6 +83,17 @@ async function data(name,page){
         
         )
       })
+      const button = document.querySelectorAll(".content")
+      button.forEach((i)=>i.addEventListener("click", function(event){
+        event.preventDefault
+        console.log(i)
+        const info = document.querySelectorAll(".content")
+        const footer = document.querySelector("#footer")
+        footer.remove()
+        info.forEach((i)=>i.remove())
+        var id = i.getAttribute('id')
+        pageload(id,name,page)
+      }))
       if(page===1){
         if(page===list.pagination.last_visible_page){
           DOMSelectors.box.insertAdjacentHTML(
@@ -147,7 +158,7 @@ async function data(name,page){
         const selectors = document.querySelectorAll(".pageselector")
         selectors.forEach((i)=>{i.addEventListener("click",function(event){
           event.preventDefault
-          const info = document.querySelectorAll("#content")
+          const info = document.querySelectorAll(".content")
           const footer = document.querySelector("#footer")
           footer.remove()
           info.forEach((i)=>i.remove())
@@ -170,6 +181,33 @@ async function data(name,page){
   catch{
     console.log("caught")
   }
+}
+
+async function pageload(id,oname,opage){
+  let anime = await fetch(`https://api.jikan.moe/v4/anime/${id}/full`);
+  let list = await anime.json();
+
+    DOMSelectors.box.insertAdjacentHTML(
+      "afterbegin",
+      `
+      <button id="back">back to where you came from </button>
+      <div class="content" id="${list.data.mal_id}">
+        <p>${list.data.title}</p>
+        <p>${list.data.rating}</p>
+        <img src="${list.data.images.webp.image_url}">
+        
+      </div>
+      `
+      
+      )
+      const button=document.querySelector("#back")
+      button.addEventListener("click",function(event){
+        event.preventDefault
+        const info = document.querySelectorAll(".content")
+        info.forEach((i)=>i.remove())
+        button.remove()
+        data(oname,opage)
+      })
 }
 
 initial();
