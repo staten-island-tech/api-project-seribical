@@ -3,6 +3,7 @@ export const DOMSelectors={
     search: document.querySelector("#search"),
     button: document.querySelector("#submit"),
     dropdown: document.querySelector("#genredrop"),
+    random: document.querySelector("#random"),
 }
 
 

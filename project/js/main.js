@@ -73,7 +73,7 @@ DOMSelectors.button.addEventListener("click", function(event){
 
 async function data(name,page){
   try{
-    let anime = await fetch(`https://api.jikan.moe/v4/anime?q=${name}&page=${page}`);
+    let anime = await fetch(`https://api.jikan.moe/v4/anime?sfw&q=${name}&page=${page}`);
     let list = await anime.json();
     list.data.reverse();
     console.log(list)
@@ -195,7 +195,7 @@ async function data(name,page){
 
 async function datag(genre,page){
   try{
-    let anime = await fetch(`https://api.jikan.moe/v4/anime?genres=${genre}`);
+    let anime = await fetch(`https://api.jikan.moe/v4/anime?sfw&genres=${genre}&page=${page}`);
     let list = await anime.json();
     list.data.reverse();
     console.log(list)
@@ -349,5 +349,15 @@ function remove(){
   info.forEach((i)=>i.remove())
 }
 
+DOMSelectors.random.addEventListener("click",function(event){
+  event.preventDefault;
+  random()
+  console.log("jii")
+})
+
+async function random(){
+  let anime = await fetch(`https://api.jikan.moe/v4/anime/${id}/full`);
+  let list = await anime.json();
+}
 initial();
 
