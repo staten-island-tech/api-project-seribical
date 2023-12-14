@@ -35,7 +35,6 @@ async function initial(){
         `
       )
     glist.data.forEach((i)=>{
-      console.log(i)
       DOMSelectors.dropdown.insertAdjacentHTML(
          "afterbegin",
         `
@@ -77,7 +76,7 @@ async function data(name,page){
     let list = await anime.json();
     list.data.reverse();
     console.log(list)
-    if(list.data.length==0){
+    if(list.data.length===0){
       console.log('search better kid')
       DOMSelectors.box.insertAdjacentHTML(
         "afterbegin",
@@ -172,11 +171,11 @@ async function data(name,page){
         selectors.forEach((i)=>{i.addEventListener("click",function(event){
           event.preventDefault
           remove()
-          if(i.textContent==">"){
+          if(i.textContent===">"){
             const number = page+1
             data(name,number)
           }
-          if(i.textContent=="<"){
+          if(i.textContent==="<"){
             const number = page-1
             data(name,number)
           }
@@ -199,7 +198,7 @@ async function datag(genre,page){
     let list = await anime.json();
     list.data.reverse();
     console.log(list)
-    if(list.data.length==0){
+    if(list.data.length===0){
       console.log('search better kid')
       DOMSelectors.box.insertAdjacentHTML(
         "afterbegin",
@@ -227,7 +226,7 @@ async function datag(genre,page){
         event.preventDefault
         remove()
         var id = i.getAttribute('id')
-        pageload(id,page)
+        pageloadg(id,genre,page)
       }))
       if(page===1){
         if(page===list.pagination.last_visible_page){
@@ -294,11 +293,11 @@ async function datag(genre,page){
         selectors.forEach((i)=>{i.addEventListener("click",function(event){
           event.preventDefault
           remove()
-          if(i.textContent==">"){
+          if(i.textContent===">"){
             const number = page+1
             datag(genre,number)
           }
-          if(i.textContent=="<"){
+          if(i.textContent==="<"){
             const number = page-1
             datag(genre,number)
           }
@@ -336,10 +335,36 @@ async function pageload(id,oname,opage){
       const button=document.querySelector("#back")
       button.addEventListener("click",function(event){
         event.preventDefault
-        const info = document.querySelectorAll(".content")
-        info.forEach((i)=>i.remove())
+        remove()
         button.remove()
         data(oname,opage)
+      })
+}
+
+async function pageloadg(id,ogenre,opage){
+  let anime = await fetch(`https://api.jikan.moe/v4/anime/${id}/full`);
+  let list = await anime.json();
+  console.log(list)
+    DOMSelectors.box.insertAdjacentHTML(
+      "afterbegin",
+      `
+      <div class="content" id="${list.data.mal_id}">
+      <button id="back">back to where you came from </button>
+        <p>${list.data.title}</p>
+        <p>${list.data.rating}</p>
+        <img src="${list.data.images.webp.image_url}">
+        
+      </div>
+      <div id="footer"></div>
+      `
+      
+      )
+      const button=document.querySelector("#back")
+      button.addEventListener("click",function(event){
+        event.preventDefault
+        remove()
+        button.remove()
+        datag(ogenre,opage)
       })
 }
 
