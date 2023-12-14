@@ -227,7 +227,7 @@ async function datag(genre,page){
         event.preventDefault
         remove()
         var id = i.getAttribute('id')
-        pageload(id,name,page)
+        pageload(id,page)
       }))
       if(page===1){
         if(page===list.pagination.last_visible_page){
@@ -322,13 +322,14 @@ async function pageload(id,oname,opage){
     DOMSelectors.box.insertAdjacentHTML(
       "afterbegin",
       `
-      <button id="back">back to where you came from </button>
       <div class="content" id="${list.data.mal_id}">
+      <button id="back">back to where you came from </button>
         <p>${list.data.title}</p>
         <p>${list.data.rating}</p>
         <img src="${list.data.images.webp.image_url}">
         
       </div>
+      <div id="footer"></div>
       `
       
       )
@@ -355,7 +356,7 @@ DOMSelectors.random.addEventListener("click",function(event){
 })
 
 async function random(){
-  let anime = await fetch(`https://api.jikan.moe/v4/random/anime?sfw`);
+  let anime = await fetch(`https://api.jikan.moe/v4/random/anime`);
   let list = await anime.json();
   console.log(list);
   if(list.data.rating=="Rx - Hentai"){
@@ -375,6 +376,12 @@ async function random(){
       `
   )}
 }
+
+DOMSelectors.home.addEventListener("click",function(event){
+  event.preventDefault()
+  remove()
+  initial();
+})
   
 initial();
 

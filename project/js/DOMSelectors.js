@@ -4,6 +4,7 @@ export const DOMSelectors={
     button: document.querySelector("#submit"),
     dropdown: document.querySelector("#genredrop"),
     random: document.querySelector("#random"),
+    home: document.querySelector("#home"),
 }
 
 
