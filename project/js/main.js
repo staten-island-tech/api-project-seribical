@@ -352,12 +352,29 @@ function remove(){
 DOMSelectors.random.addEventListener("click",function(event){
   event.preventDefault;
   random()
-  console.log("jii")
 })
 
 async function random(){
-  let anime = await fetch(`https://api.jikan.moe/v4/anime/${id}/full`);
+  let anime = await fetch(`https://api.jikan.moe/v4/random/anime?sfw`);
   let list = await anime.json();
+  console.log(list);
+  if(list.data.rating=="Rx - Hentai"){
+    random()
+  }else{
+    remove()
+    DOMSelectors.box.insertAdjacentHTML(
+      "afterbegin",
+      `
+      <div class="content" id="${list.data.mal_id}">
+        <h3>${list.data.title}</h3>
+        <p>${list.data.rating}</p>
+        <img src="${list.data.images.webp.image_url}">
+        <p></p>
+      </div>
+      <div id="footer"></div>
+      `
+  )}
 }
+  
 initial();
 
