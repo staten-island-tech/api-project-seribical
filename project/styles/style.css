@@ -9,18 +9,25 @@ body{
     height: 45px;
     width: 100%;
     display: flex;
-    
+    position: relative;
+    z-index: 1;
 }
 
 #genredrop{
     display: none;
     width: 400px;
+    background-color: aliceblue;
 }
 
 #genres:hover #genredrop{
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
 
+.dropped{
+    width: 30%;
 }
 
 #content{
@@ -50,4 +57,11 @@ body{
 
 div{
     border: 1px solid black;
+}
+
+#flexbox{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 0;
 }
