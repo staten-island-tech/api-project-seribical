@@ -11,11 +11,13 @@ body{
     display: flex;
     position: relative;
     z-index: 1;
+    padding: none;
+    flex-wrap: nowrap;
 }
 
 #genredrop{
     display: none;
-    width: 400px;
+    width: 600px;
     background-color: aliceblue;
 }
 
@@ -27,11 +29,33 @@ body{
 }
 
 .dropped{
-    width: 30%;
+    width: 21%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    
+}
+
+.dropped:hover{
+    background-color: aqua;
+    cursor: pointer;
 }
 
 #content{
     display: flex;
+}
+
+#half1{
+    width: 49%;
+    display: flex;
+}
+
+#half2{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
 }
 
 #page{
