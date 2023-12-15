@@ -14,10 +14,13 @@ body{
 
 #genredrop{
     display: none;
+    width: 400px;
 }
 
 #genres:hover #genredrop{
-    display: block;
+    display: flex;
+    flex-wrap: wrap;
+
 }
 
 #content{

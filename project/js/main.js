@@ -7,12 +7,42 @@ DOMSelectors.box.innerHTML = `
 
 async function initial(){
   try{
-    const random = Math.floor(Math.random() * 1034) + 1;
-    console.log(random)
-    let anime= await fetch(`https://api.jikan.moe/v4/anime?status=airing`);
     let genres= await fetch(`https://api.jikan.moe/v4/genres/anime`);
+    let list= await genres.json();
+    let reverse = list.data.reverse();
+    console.log(reverse.length)
+    reverse.forEach((i)=>{
+      if (i.name==="Hentai"||i.name==="Erotica"||i.name==="Ecchi"){
+        console.log("nuh uh")
+      }else{
+        DOMSelectors.dropdown.insertAdjacentHTML(
+          "afterbegin",
+         `
+         <p class="dropped" id="${i.mal_id}">
+           ${i.name}
+         </p>
+         `
+       )
+      }
+      
+    })
+    const dropped = document.querySelectorAll(".dropped")
+    dropped.forEach((i)=>i.addEventListener("click",function(event){
+      event.preventDefault()
+      remove()
+      var id = i.getAttribute('id')
+      datag(id,1)
+    }))
+  }
+  catch{
+    console.log("caught")
+  }
+}
+
+async function home(){
+  try{
+    let anime= await fetch(`https://api.jikan.moe/v4/anime?status=airing`);
     let list= await anime.json();
-    let glist= await genres.json();
     let reverse = list.data.reverse();
     reverse.forEach((i)=>{
       DOMSelectors.box.insertAdjacentHTML(
@@ -34,24 +64,7 @@ async function initial(){
         </div>
         `
       )
-    glist.data.forEach((i)=>{
-      DOMSelectors.dropdown.insertAdjacentHTML(
-         "afterbegin",
-        `
-        <p class="dropped" id="${i.mal_id}">
-          ${i.name}
-        </p>
-        `
-      )
-    })
-    const dropped = document.querySelectorAll(".dropped")
-    dropped.forEach((i)=>i.addEventListener("click",function(event){
-      event.preventDefault()
-      remove()
-      var id = i.getAttribute('id')
-      datag(id,1)
-    }))
-  }
+    }
   catch{
     console.log("caught")
   }
@@ -405,8 +418,9 @@ async function random(){
 DOMSelectors.home.addEventListener("click",function(event){
   event.preventDefault()
   remove()
-  initial();
+  home();
 })
   
 initial();
+home();
 
