@@ -18,7 +18,7 @@ body{
 #genredrop{
     display: none;
     width: 600px;
-    background-color: aliceblue;
+    background-color: rgb(255, 255, 255);
 }
 
 #genres:hover #genredrop{
