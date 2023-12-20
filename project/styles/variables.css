@@ -1,3 +1,7 @@
 :root{
-    --black:#000000;
+    --black:#333333;
+    --grey2:#c7c7c7;
+    --grey3:#b3b3b3;
+    --grey:#727272;
+    --lessblack: #505050;
 }

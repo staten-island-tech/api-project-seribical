@@ -3,6 +3,7 @@
 body{
     margin: 0px;
     padding: 0px;
+    background-color: var(--grey);
 }
 
 #navbar{
@@ -13,12 +14,14 @@ body{
     z-index: 1;
     padding: none;
     flex-wrap: nowrap;
+    background-color: var(--black);
 }
 
 #genredrop{
     display: none;
     width: 600px;
-    background-color: rgb(255, 255, 255);
+    background-color: var(--grey2);
+    height: auto;
 }
 
 #genres:hover #genredrop{
@@ -29,26 +32,62 @@ body{
 }
 
 #home, #random, #genre{
-    width: 100%;
+    width: 200px;
     height: 100%;
+    background-color: var(--black);
+    color: var(--grey2);
+    border: none;
+}
+
+#home:hover, #random:hover{
+    background-color: var(--lessblack);
+}
+
+#genres:hover #genre{
+    width: 100%;
+    background-color: var(--lessblack);
 }
 
 .dropped{
     width: 21%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    height: 25px;
-    
+    justify-content: space-evenly;
+    height: 40px;
+    border-radius: 5px;
 }
 
 .dropped:hover{
-    background-color: aqua;
+    background-color: var(--grey3);
     cursor: pointer;
 }
 
-#content{
+#search{
+    height: 100%;
+    border: none;
+}
+
+#submit{
+    background-color: var(--black);
+    height:100%;
+    width: 50px;
+    border: none;
+    color:var(--grey2);
+
+}
+
+#submit:hover{
+    background-color: var(--lessblack);
+}
+
+.content{
     display: flex;
+    height: 200px;
+    margin: 25px;
+}
+
+.content img{
+    width: 10%
 }
 
 #half1{

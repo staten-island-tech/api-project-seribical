@@ -94,7 +94,7 @@ async function data(name,page){
       DOMSelectors.box.insertAdjacentHTML(
         "afterbegin",
         `
-        <p class="content">no results for ${name}</p>
+        <h3 class="content">No results for ${name}</h3>
         <div id="footer">
           </div>
         `
@@ -105,6 +105,7 @@ async function data(name,page){
         "afterbegin",
         `
         <div class="content" id="${i.mal_id}">
+          <img src="${i.images.webp.image_url}">
           <p>${i.title}</p>
           <p>${i.rating}</p>
         </div>
