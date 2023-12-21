@@ -105,9 +105,14 @@ async function data(name,page){
         "afterbegin",
         `
         <div class="content" id="${i.mal_id}">
-          <img src="${i.images.webp.image_url}">
-          <p>${i.title}</p>
-          <p>${i.rating}</p>
+          <div id="imageholder">
+            <img src="${i.images.webp.image_url}">
+          </div>
+          <div>
+            <p>${i.title}</p>
+            <p>${i.rating}</p>
+            <p>${i.synopsis}</p>
+            </div>
         </div>
         `
         

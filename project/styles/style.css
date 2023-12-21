@@ -84,10 +84,17 @@ body{
     display: flex;
     height: 200px;
     margin: 25px;
+    background-color: var(--lessblack);
 }
 
 .content img{
-    width: 10%
+    width: 100%;
+    height: 100%;
+}
+
+#imageholder{
+    width: 300px;
+    height: 100%;
 }
 
 #half1{
