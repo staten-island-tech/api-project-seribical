@@ -82,8 +82,8 @@ body{
 
 .content{
     display: flex;
-    height: 200px;
-    margin: 25px;
+    height: auto;
+    margin: 50px;
     background-color: var(--lessblack);
 }
 
@@ -92,9 +92,13 @@ body{
     height: 100%;
 }
 
+#info{
+    width: 95%;
+}
+
 #imageholder{
-    width: 300px;
-    height: 100%;
+    width: auto;
+    height: 250px;
 }
 
 #half1{

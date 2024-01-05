@@ -108,7 +108,7 @@ async function data(name,page){
           <div id="imageholder">
             <img src="${i.images.webp.image_url}">
           </div>
-          <div>
+          <div id="info">
             <p>${i.title}</p>
             <p>${i.rating}</p>
             <p>${i.synopsis}</p>
