@@ -57,7 +57,7 @@ async function home(){
         <div class="content">
           <div class="card" id="${i.mal_id}">
           <div id="imageholder">
-            <img src="${i.images.webp.image_url}">
+            <img src="${i.images.webp.image_url}" alt="${i.title} cover">
           </div>
           <div id="info">
             <div id="head">
@@ -130,7 +130,7 @@ async function data(name,page){
         <div class="content">
           <div class="card" id="${i.mal_id}">
           <div id="imageholder">
-            <img src="${i.images.webp.image_url}">
+            <img src="${i.images.webp.image_url}" alt="${i.title} cover">
           </div>
           <div id="info">
             <div id="head">
@@ -274,7 +274,7 @@ async function datag(genre,page){
         <div class="content">
           <div class="card" id="${i.mal_id}">
           <div id="imageholder">
-            <img src="${i.images.webp.image_url}">
+            <img src="${i.images.webp.image_url}" alt="${i.title} cover">
           </div>
           <div id="info">
             <div id="head">
@@ -405,7 +405,7 @@ async function pageload(id,oname,opage){
         <button id="back">back to where you came from </button>
         <div id="letsgo">
           <div id="topme">
-            <img src="${list.data.images.webp.image_url}">
+            <img src="${list.data.images.webp.image_url}" >
             <div id="next">
               <p>${list.data.title}</p>
               <p>${list.data.rating}</p>
