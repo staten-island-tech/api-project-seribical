@@ -41,29 +41,52 @@ async function initial(){
 
 async function home(){
   try{
-    let anime= await fetch(`https://api.jikan.moe/v4/anime?status=airing`);
+    let anime= await fetch(`https://api.jikan.moe/v4/anime?order_by=popularity&status=airing`);
     let list= await anime.json();
     let reverse = list.data.reverse();
+    DOMSelectors.box.insertAdjacentHTML(
+      "beforeend",
+      `<div id="footer">
+  
+      </div>`
+      )
     reverse.forEach((i)=>{
       DOMSelectors.box.insertAdjacentHTML(
         "afterbegin",
         `
         <div class="content">
-        <p>${i.title}</p>
-        <p>${i.rating}</p>
+          <div class="card" id="${i.mal_id}">
+          <div id="imageholder">
+            <img src="${i.images.webp.image_url}">
+          </div>
+          <div id="info">
+            <div id="head">
+              <div id="titles">
+                <p>${i.title}</p>
+                <p>${i.rating}</p>
+              </div>
+                <div id="pillbottle">
+                <p id="score">${i.score}/10</p>
+                </div>
+            </div>
+            <p>${i.synopsis}</p>
+          </div>
+          </div>
         </div>
         `)
+        i.genres.forEach((j)=>{
+          document.querySelector("#pillbottle").insertAdjacentHTML(
+            "afterbegin",
+            `<div id="pill"><p>${j.name}</p></div>`
+          )
+        })
       })
-      DOMSelectors.box.insertAdjacentHTML(
-        "beforeend",
-        `
-        <div id="footer">
-          <button id="prev"><</button>
-          <input type="text" id="page" value="1">
-          <button id="next">></button>
-        </div>
-        `
-      )
+      const button = document.querySelectorAll(".card")
+      button.forEach((i)=>i.addEventListener("click", function(event){
+        event.preventDefault
+        remove()
+        var id = i.getAttribute('id')
+        pageloadh(id)}))
     }
   catch{
     console.log("caught")
@@ -104,21 +127,37 @@ async function data(name,page){
       DOMSelectors.box.insertAdjacentHTML(
         "afterbegin",
         `
-        <div class="content" id="${i.mal_id}">
+        <div class="content">
+          <div class="card" id="${i.mal_id}">
           <div id="imageholder">
             <img src="${i.images.webp.image_url}">
           </div>
           <div id="info">
-            <p>${i.title}</p>
-            <p>${i.rating}</p>
-            <p>${i.synopsis}</p>
+            <div id="head">
+              <div id="titles">
+                <p>${i.title}</p>
+                <p>${i.rating}</p>
+              </div>
+                <div id="pillbottle">
+                <p id="score">${i.score}/10</p>
+                </div>
             </div>
+            <p>${i.synopsis}</p>
+          </div>
+          </div>
         </div>
         `
         
         )
+        i.genres.forEach((j)=>{
+          document.querySelector("#pillbottle").insertAdjacentHTML(
+            "afterbegin",
+            `<div id="pill"><p>${j.name}</p></div>`
+          )
+        })
       })
-      const button = document.querySelectorAll(".content")
+
+      const button = document.querySelectorAll(".card")
       button.forEach((i)=>i.addEventListener("click", function(event){
         event.preventDefault
         remove()
@@ -232,15 +271,36 @@ async function datag(genre,page){
       DOMSelectors.box.insertAdjacentHTML(
         "afterbegin",
         `
-        <div class="content" id="${i.mal_id}">
-          <p>${i.title}</p>
-          <p>${i.rating}</p>
+        <div class="content">
+          <div class="card" id="${i.mal_id}">
+          <div id="imageholder">
+            <img src="${i.images.webp.image_url}">
+          </div>
+          <div id="info">
+            <div id="head">
+              <div id="titles">
+                <p>${i.title}</p>
+                <p>${i.rating}</p>
+              </div>
+                <div id="pillbottle">
+                <p id="score">${i.score}/10</p>
+                </div>
+            </div>
+            <p>${i.synopsis}</p>
+          </div>
+          </div>
         </div>
         `
         
         )
+        i.genres.forEach((j)=>{
+          document.querySelector("#pillbottle").insertAdjacentHTML(
+            "afterbegin",
+            `<div id="pill"><p>${j.name}</p></div>`
+          )
+        })
       })
-      const button = document.querySelectorAll(".content")
+      const button = document.querySelectorAll(".card")
       button.forEach((i)=>i.addEventListener("click", function(event){
         event.preventDefault
         remove()
@@ -336,21 +396,39 @@ async function datag(genre,page){
 async function pageload(id,oname,opage){
   let anime = await fetch(`https://api.jikan.moe/v4/anime/${id}/full`);
   let list = await anime.json();
-  console.log(list)
+  console.log(list.genres)
     DOMSelectors.box.insertAdjacentHTML(
       "afterbegin",
       `
-      <div class="content" id="${list.data.mal_id}">
-      <button id="back">back to where you came from </button>
-        <p>${list.data.title}</p>
-        <p>${list.data.rating}</p>
-        <img src="${list.data.images.webp.image_url}">
-        
+      <div class="content">
+      
+        <button id="back">back to where you came from </button>
+        <div id="letsgo">
+          <div id="topme">
+            <img src="${list.data.images.webp.image_url}">
+            <div id="next">
+              <p>${list.data.title}</p>
+              <p>${list.data.rating}</p>
+              <div id="pilled">
+              </div>
+            </div>
+            <div>
+              <p>${list.data.synopsis}</p>
+              <p>${list.data.background}</p>
+            </div>
+          </div>
+        </div>
       </div>
       <div id="footer"></div>
       `
       
       )
+      list.data.genres.forEach((i)=>{
+        document.querySelector("#pilled").insertAdjacentHTML(
+          "afterbegin",
+          `<div id="pill"><p>${i.name}</p></div>`
+        )
+      })
       const button=document.querySelector("#back")
       button.addEventListener("click",function(event){
         event.preventDefault
@@ -367,23 +445,86 @@ async function pageloadg(id,ogenre,opage){
     DOMSelectors.box.insertAdjacentHTML(
       "afterbegin",
       `
-      <div class="content" id="${list.data.mal_id}">
-      <button id="back">back to where you came from </button>
-        <p>${list.data.title}</p>
-        <p>${list.data.rating}</p>
-        <img src="${list.data.images.webp.image_url}">
-        
+      <div class="content">
+      
+        <button id="back">back to where you came from </button>
+        <div id="letsgo">
+          <div id="topme">
+            <img src="${list.data.images.webp.image_url}">
+            <div id="next">
+              <p>${list.data.title}</p>
+              <p>${list.data.rating}</p>
+              <div id="pilled">
+              </div>
+            </div>
+            <div>
+              <p>${list.data.synopsis}</p>
+              <p>${list.data.background}</p>
+            </div>
+          </div>
+        </div>
       </div>
       <div id="footer"></div>
       `
       
       )
+      list.data.genres.forEach((i)=>{
+        document.querySelector("#pilled").insertAdjacentHTML(
+          "afterbegin",
+          `<div id="pill"><p>${i.name}</p></div>`
+        )
+      })
       const button=document.querySelector("#back")
       button.addEventListener("click",function(event){
         event.preventDefault
         remove()
         button.remove()
         datag(ogenre,opage)
+      })
+}
+
+async function pageloadh(id){
+  let anime = await fetch(`https://api.jikan.moe/v4/anime/${id}/full`);
+  let list = await anime.json();
+  console.log(list)
+    DOMSelectors.box.insertAdjacentHTML(
+      "afterbegin",
+      `
+      <div class="content">
+      
+        <button id="back">back to where you came from </button>
+        <div id="letsgo">
+          <div id="topme">
+            <img src="${list.data.images.webp.image_url}">
+            <div id="next">
+              <p>${list.data.title}</p>
+              <p>${list.data.rating}</p>
+              <div id="pilled">
+              </div>
+            </div>
+            <div>
+              <p>${list.data.synopsis}</p>
+              <p>${list.data.background}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="footer"></div>
+      `
+      
+      )
+      list.data.genres.forEach((i)=>{
+        document.querySelector("#pilled").insertAdjacentHTML(
+          "afterbegin",
+          `<div id="pill"><p>${i.name}</p></div>`
+        )
+      })
+      const button=document.querySelector("#back")
+      button.addEventListener("click",function(event){
+        event.preventDefault
+        remove()
+        button.remove()
+        home()
       })
 }
 
@@ -410,15 +551,32 @@ async function random(){
     DOMSelectors.box.insertAdjacentHTML(
       "afterbegin",
       `
-      <div class="content" id="${list.data.mal_id}">
-        <h3>${list.data.title}</h3>
-        <p>${list.data.rating}</p>
-        <img src="${list.data.images.webp.image_url}">
-        <p></p>
+      <div class="content">
+        <div id="letsgo">
+          <div id="topme">
+            <img src="${list.data.images.webp.image_url}">
+            <div id="next">
+              <p>${list.data.title}</p>
+              <p>${list.data.rating}</p>
+              <div id="pilled">
+              </div>
+            </div>
+            <div>
+              <p>${list.data.synopsis}</p>
+              <p>${list.data.background}</p>
+            </div>
+          </div>
+        </div>
       </div>
       <div id="footer"></div>
       `
-  )}
+  )
+  list.data.genres.forEach((i)=>{
+    document.querySelector("#pilled").insertAdjacentHTML(
+      "afterbegin",
+      `<div id="pill"><p>${i.name}</p></div>`
+    )
+  })}
 }
 
 DOMSelectors.home.addEventListener("click",function(event){
